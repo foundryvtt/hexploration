@@ -3,7 +3,7 @@
   "title": "Hexploration",
   "description": "A simple module for hex-based exploration.",
   "authors": [{ "name": "Kim Mantas", "discord": "fyorl", "url": "https://foundryvtt.com" }],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -12,5 +12,5 @@
   "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
   "url": "https://github.com/foundryvtt/hexploration",
   "manifest": "https://raw.githubusercontent.com/foundryvtt/hexploration/master/module.json",
-  "download": "https://github.com/foundryvtt/hexploration/archive/refs/tags/release-1.0.0.zip"
+  "download": "https://github.com/foundryvtt/hexploration/archive/refs/tags/release-1.0.1.zip"
 }

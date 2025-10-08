@@ -40,7 +40,8 @@ export default class HexplorationSceneManager extends foundry.canvas.SceneManage
   static setup() {
     game.scenes.forEach(scene => {
       const enabled = scene.getFlag("hexploration", "enabled");
-      if ( enabled ) CONFIG.Canvas.managedScenes[scene.id] = HexplorationSceneManager;
+      const type = scene.grid.type;
+      if ( enabled && (type > 1) ) CONFIG.Canvas.managedScenes[scene.id] = HexplorationSceneManager;
     });
   }
 
@@ -52,10 +53,19 @@ export default class HexplorationSceneManager extends foundry.canvas.SceneManage
    * @param {object} delta  The update delta.
    */
   static update(scene, delta) {
-    if ( !foundry.utils.hasProperty(delta, "flags.hexploration.enabled") ) return;
-    const enabled = foundry.utils.getProperty(delta, "flags.hexploration.enabled");
-    if ( enabled ) CONFIG.Canvas.managedScenes[scene.id] = HexplorationSceneManager;
-    else delete CONFIG.Canvas.managedScenes[scene.id];
-    if ( canvas.scene === scene ) canvas.draw();
+    if ( !foundry.utils.hasProperty(delta, "flags.hexploration.enabled")
+      && !foundry.utils.hasProperty(delta, "grid.type") ) return;
+    const enabled = foundry.utils.getProperty(delta, "flags.hexploration.enabled")
+      ?? scene.getFlag("hexploration", "enabled");
+    const type = foundry.utils.getProperty(delta, "grid.type") ?? scene.grid.type;
+    let changedManager = false;
+    if ( enabled && (type > 1) ) {
+      if ( CONFIG.Canvas.managedScenes[scene.id] !== HexplorationSceneManager ) changedManager = true;
+      CONFIG.Canvas.managedScenes[scene.id] = HexplorationSceneManager;
+    } else {
+      if ( scene.id in CONFIG.Canvas.managedScenes ) changedManager = true;
+      delete CONFIG.Canvas.managedScenes[scene.id];
+    }
+    if ( changedManager && (canvas.scene === scene) ) canvas.draw();
   }
 }
