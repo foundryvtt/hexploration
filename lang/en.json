@@ -1,0 +1,10 @@
+{
+  "HEXPLORATION": {
+    "FIELDS": {
+      "enabled": {
+        "hint": "When enabled, tokens will only explore a single hex at a time.",
+        "label": "Single-Hex Exploration"
+      }
+    }
+  }
+}

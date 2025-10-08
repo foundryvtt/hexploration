@@ -1,0 +1,5 @@
+packs/* binary
+packs/_source text eol=lf
+
+# Preserve LF endings for extracted database files
+*.yml text eol=lf

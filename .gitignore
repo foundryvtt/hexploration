@@ -1,0 +1,12 @@
+# Ignore externals and environment artifacts
+.DS_Store
+node_modules/
+.idea
+*.sw*
+*.*.orig
+*.nova
+*.lock
+
+# Only keep underscore (e.g. _source/) files/folders
+packs/*
+!packs/_*
