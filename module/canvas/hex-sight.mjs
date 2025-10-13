@@ -1,5 +1,5 @@
 /**
- * Custom vision polygon that restricts vision to a single hex.
+ * Custom vision polygon that restricts vision to a fixed hexagon shape.
  */
 export default class HexSightPolygon extends foundry.canvas.geometry.PointSourcePolygon {
   /**
@@ -12,11 +12,23 @@ export default class HexSightPolygon extends foundry.canvas.geometry.PointSource
 
   /**
    * Hex point offsets.
-   * @type {{row: number[][], col: number[][]}}
+   * @type {{row: number[][][], col: number[][][]}}
    */
   static POINTS = {
-    row: [[0, .5], [.5, .25], [.5, -.25], [0, -.5], [-.5, -.25], [-.5, .25]],
-    col: [[-.25, .5], [.25, .5], [.5, 0], [.25, -.5], [-.25, -.5], [-.5, 0]]
+    row: [
+      [[0, .5], [.5, .25], [.5, -.25], [0, -.5], [-.5, -.25], [-.5, .25]],
+      [
+        [-1.5, -.25], [-1, -.5], [-1, -1], [-.5, -1.25], [0, -1], [.5, -1.25], [1, -1], [1, -.5], [1.5, -.25],
+        [1.5, .25], [1, .5], [1, 1], [.5, 1.25], [0, 1], [-.5, 1.25], [-1, 1], [-1, .5], [-1.5, .25]
+      ]
+    ],
+    col: [
+      [[-.25, .5], [.25, .5], [.5, 0], [.25, -.5], [-.25, -.5], [-.5, 0]],
+      [
+        [.25, -1.5], [.5, -1], [1, -1], [1.25, -.5], [1, 0], [1.25, .5], [1, 1], [.5, 1], [.25, 1.5], [-.25, 1.5],
+        [-.5, 1], [-1, 1], [-1.25, .5], [-1, 0], [-1.25, -.5], [-1, -1], [-.5, -1], [-.25, -1.5]
+      ]
+    ]
   };
 
   /* -------------------------------------------- */
@@ -43,7 +55,8 @@ export default class HexSightPolygon extends foundry.canvas.geometry.PointSource
     const t = canvas.grid.type;
     const hex = new foundry.grid.GridHex(canvas.grid.getOffset(this.origin), canvas.grid);
     const points = HexSightPolygon.POINTS[t >= 2 && t <= 3 ? "row" : "col"];
-    this.points = HexSightPolygon.applyPadding(hex, points);
+    const range = foundry.utils.getProperty(this.config, "source.object.document.sight.range") ?? 1;
+    this.points = HexSightPolygon.applyPadding(hex, points[range - 1] ?? points[0]);
   }
 
   /* -------------------------------------------- */

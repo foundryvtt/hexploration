@@ -3,7 +3,7 @@
   "title": "Hexploration",
   "description": "A simple module for hex-based exploration.",
   "authors": [{ "name": "Kim Mantas", "discord": "fyorl", "url": "https://foundryvtt.com" }],
-  "version": "1.0.1",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
